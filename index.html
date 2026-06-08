@@ -1,1 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My IPTV Player</title>
+    <style>
+        body { background: #0f111a; color: #fff; font-family: sans-serif; margin: 0; padding: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
+        .card { background: #1a1f29; padding: 15px; border-radius: 12px; text-align: center; border: 1px solid #242c3d; cursor: pointer; }
+        #video-player { width: 100%; max-width: 800px; margin: 20px auto; display: block; }
+    </style>
+</head>
+<body>
+    <input type="text" id="search" placeholder="Search..." style="width:100%; padding:10px; margin-bottom:20px; background:#1a1f29; color:#fff; border:none;">
+    
+    <video id="video-player" controls></video>
+    
+    <div class="grid" id="grid"></div>
 
+    <script>
+        const player = document.getElementById('video-player');
+        // এখানে আপনার playlist.m3u এর লিংক বসান (অথবা ফাইলটি আপলোড করে তার নাম দিন)
+        async function loadChannels() {
+            const res = await fetch('playlist.m3u'); 
+            const text = await res.text();
+            // সিম্পল পার্সিং লজিক
+            const lines = text.split('\n');
+            const grid = document.getElementById('grid');
+            
+            for(let i=0; i<lines.length; i++) {
+                if(lines[i].startsWith('#EXTINF')) {
+                    const name = lines[i].split(',')[1];
+                    const url = lines[i+1];
+                    const div = document.createElement('div');
+                    div.className = 'card';
+                    div.innerHTML = `📺<br>${name}`;
+                    div.onclick = () => { player.src = url; player.play(); };
+                    grid.appendChild(div);
+                }
+            }
+        }
+        loadChannels();
+    </script>
+</body>
+</html>
