@@ -1,27 +1,46 @@
-<script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IPTV Player</title>
+    <style>
+        body { background: #0f111a; color: #fff; font-family: sans-serif; padding: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; margin-top: 20px; }
+        .card { background: #1a1f29; padding: 15px; border-radius: 12px; text-align: center; border: 1px solid #242c3d; cursor: pointer; }
+        #video-player { width: 100%; max-width: 800px; margin: 0 auto; display: block; border: 2px solid #333; }
+    </style>
+</head>
+<body>
+    <video id="video-player" controls></video>
+    <div class="grid" id="grid"></div>
+
+    <script>
         const player = document.getElementById('video-player');
         
         async function loadChannels() {
+            const grid = document.getElementById('grid');
             try {
-                const res = await fetch('playlist.m3u'); 
+                const res = await fetch('playlist.m3u');
+                if (!res.ok) throw new Error("File not found");
                 const text = await res.text();
                 const lines = text.split('\n');
-                const grid = document.getElementById('grid');
                 
-                for(let i=0; i<lines.length; i++) {
-                    if(lines[i].startsWith('#EXTINF')) {
-                        const name = lines[i].split(',')[1];
-                        const url = lines[i+1];
+                lines.forEach((line, index) => {
+                    if(line.startsWith('#EXTINF')) {
+                        const name = line.split(',')[1];
+                        const url = lines[index + 1];
                         const div = document.createElement('div');
                         div.className = 'card';
-                        div.innerHTML = `📺<br>${name}`;
+                        div.innerText = name;
                         div.onclick = () => { player.src = url; player.play(); };
                         grid.appendChild(div);
                     }
-                }
+                });
             } catch (err) {
-                console.error("প্লেলিস্ট লোড হতে সমস্যা হয়েছে:", err);
+                grid.innerHTML = `<p style="color:red;">Error: ${err.message}. Please check playlist.m3u file path.</p>`;
             }
         }
         loadChannels();
     </script>
+</body>
+</html>
