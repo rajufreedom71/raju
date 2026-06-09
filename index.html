@@ -3,28 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free IPTV</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.20.3/video-js.min.css" rel="stylesheet" />
+    <title>Free IPTV by RAJU</title>
+    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
+        /* আপনার আগের সেই মূল ডিজাইন */
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
         body { background-color: #11141a; color: #ffffff; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
         header { background: linear-gradient(to right, #ffe066, #f5b041); -webkit-background-clip: text; -webkit-text-fill-color: transparent; padding: 16px; text-align: center; font-size: 26px; font-weight: 800; border-bottom: 2px solid #1f2937; }
         .main-container { display: flex; flex: 1; overflow: hidden; }
-        .playlist-section { display: flex; flex-direction: column; background-color: #1a1f29; border-right: 2px solid #242c3d; flex: 1; max-width: 400px; min-width: 320px; }
+        .playlist-section { display: flex; flex-direction: column; background-color: #1a1f29; border-right: 2px solid #242c3d; flex: 1; max-width: 400px; min-width: 320px; overflow: hidden; }
         .player-section { flex: 3; background-color: #000; display: flex; justify-content: center; align-items: center; position: relative; }
         .video-js { width: 100% !important; height: 100% !important; }
         .search-box-container { padding: 15px; background: #1e2530; border-bottom: 1px solid #2e384e; }
         .search-input { width: 100%; padding: 10px; background: #242c3d; border: 1px solid #2e384e; border-radius: 6px; color: #fff; }
-        .zoom-sidebar { flex: 1; overflow-y: auto; }
+        .zoom-sidebar { flex: 1; overflow-y: auto; padding: 5px 0; }
         .zoom-category-header { width: 100%; background: transparent; color: #b3c2d4; border: none; padding: 13px 20px; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #1f2633; }
         .zoom-category-header.expanded { color: #f5b041; background: #1f2633; }
         .zoom-channel-sublist { list-style: none; display: none; background: #141822; }
         .zoom-channel-sublist.show { display: block; }
         .channel-item { padding: 12px 20px; border-bottom: 1px solid #1a202c; cursor: pointer; display: flex; align-items: center; color: #cbd5e1; }
         .channel-item:hover, .channel-item.active { background: #1f2633; color: #f5b041; }
-        .fav-star-btn { margin-left: auto; background: transparent; border: none; color: #4a5768; cursor: pointer; font-size: 16px; }
+        .fav-star-btn { margin-left: auto; background: transparent; border: none; color: #4a5768; cursor: pointer; }
         .fav-star-btn.starred { color: #ffcc00 !important; }
         @media (max-width: 768px) { body { overflow: auto; } .main-container { flex-direction: column; height: auto; } .player-section { aspect-ratio: 16/9; } }
     </style>
@@ -54,33 +55,37 @@
         
         document.addEventListener("DOMContentLoaded", () => {
             player = videojs('my-video');
-            fetchM3U();
+            loadPlaylist();
             document.getElementById('search-input').addEventListener('input', (e) => render(e.target.value));
         });
 
-        async function fetchM3U() {
+        async function loadPlaylist() {
             try {
                 const res = await fetch(m3uUrl);
                 const text = await res.text();
                 const lines = text.split('\n');
-                let cat = "General";
-                for(let i=0; i<lines.length; i++) {
+                let currentCat = "General";
+                for (let i = 0; i < lines.length; i++) {
                     if (lines[i].startsWith('#EXTINF:')) {
-                        cat = lines[i].match(/group-title="([^"]+)"/)?.[1] || "General";
-                        allChannels.push({ name: lines[i].split(',')[1], category: cat, url: lines[i+1]?.trim() });
+                        currentCat = lines[i].match(/group-title="([^"]+)"/)?.[1] || "General";
+                        allChannels.push({ 
+                            name: lines[i].substring(lines[i].lastIndexOf(',') + 1).trim(), 
+                            category: currentCat, 
+                            url: lines[i+1]?.trim() 
+                        });
                     }
                 }
                 render();
-            } catch (e) { console.error("Error loading playlist"); }
+            } catch (e) { console.error("Error"); }
         }
 
         function render(filter = "") {
             const container = document.getElementById('zoom-sidebar-container');
             container.innerHTML = '';
             const filtered = allChannels.filter(c => c.name.toLowerCase().includes(filter.toLowerCase()));
-            const cats = [...new Set(filtered.map(c => c.category))];
+            const categories = [...new Set(filtered.map(c => c.category))];
             
-            cats.forEach(cat => {
+            categories.forEach(cat => {
                 const btn = document.createElement('button');
                 btn.className = 'zoom-category-header';
                 btn.innerHTML = `<i class="fa-solid fa-chevron-right"></i> ${cat}`;
@@ -91,11 +96,7 @@
                     const li = document.createElement('li');
                     li.className = 'channel-item';
                     li.innerHTML = `${ch.name} <button class="fav-star-btn ${favs.includes(ch.url)?'starred':''}"><i class="fa-${favs.includes(ch.url)?'solid':'regular'} fa-star"></i></button>`;
-                    li.onclick = (e) => {
-                        if(e.target.closest('.fav-star-btn')) return;
-                        player.src({src: ch.url, type: 'application/x-mpegURL'});
-                        player.play();
-                    };
+                    li.onclick = () => { player.src({src: ch.url, type: 'application/x-mpegURL'}); player.play(); };
                     li.querySelector('.fav-star-btn').onclick = (e) => {
                         e.stopPropagation();
                         favs = favs.includes(ch.url) ? favs.filter(u=>u!==ch.url) : [...favs, ch.url];
