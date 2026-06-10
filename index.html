@@ -77,15 +77,18 @@
             height: 100% !important;
         }
         
-        /* Search Box Container */
+        /* Search Box Container - Premium Style */
         .search-box-container {
-            padding: 15px;
+            padding: 12px 15px;
             background-color: #1e2530;
             border-bottom: 1px solid #2e384e;
             position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         .search-input {
-            width: 100%;
+            flex: 1;
             padding: 10px 12px 10px 38px;
             background-color: #242c3d;
             border: 1px solid #2e384e;
@@ -93,10 +96,12 @@
             color: #ffffff;
             font-size: 14px;
             outline: none;
-            transition: border-color 0.2s;
+            transition: all 0.3s ease;
         }
         .search-input:focus {
             border-color: #f5b041;
+            box-shadow: 0 0 10px rgba(245, 176, 65, 0.2);
+            background-color: #2a3445;
         }
         .search-icon {
             position: absolute;
@@ -106,6 +111,62 @@
             color: #8899a6;
             font-size: 14px;
             pointer-events: none;
+        }
+
+        /* Premium Telegram Link Button */
+        .telegram-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 9px 14px;
+            background: linear-gradient(135deg, #0088cc 0%, #005aa0 100%);
+            border-radius: 8px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1.5px solid #0099dd;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .telegram-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .telegram-link:hover::before {
+            left: 100%;
+        }
+
+        .telegram-link:hover {
+            background: linear-gradient(135deg, #00a8e8 0%, #0088cc 100%);
+            box-shadow: 0 0 20px rgba(0, 136, 204, 0.6), 0 0 40px rgba(0, 136, 204, 0.3);
+            transform: translateY(-2px);
+            border-color: #00d4ff;
+        }
+
+        .telegram-link:active {
+            transform: translateY(0);
+        }
+
+        .telegram-link i {
+            font-size: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .telegram-link:hover i {
+            transform: scale(1.1);
         }
 
         /* Sidebar Scrollable Area */
@@ -209,6 +270,11 @@
             cursor: pointer;
             font-size: 16px;
             padding: 5px;
+            transition: all 0.2s ease;
+        }
+        .fav-star-btn:hover { 
+            color: #ffcc00;
+            transform: scale(1.2);
         }
         .fav-star-btn.starred { color: #ffcc00 !important; }
 
@@ -219,22 +285,39 @@
             .playlist-section { order: 2; max-width: 100%; min-width: 100%; flex: none; border-right: none; border-top: 2px solid #242c3d; overflow: visible; }
             .zoom-sidebar { overflow-y: visible; }
             header { font-size: 22px; padding: 14px; }
+            .search-box-container {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .search-input {
+                flex: 1 1 100%;
+                min-width: 150px;
+            }
+            .telegram-link {
+                font-size: 11px;
+                padding: 8px 12px;
+                gap: 5px;
+            }
+            .telegram-link i {
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <header>📺 FREE IPTV BY RAJU</header>
+    <header>📺 Free IPTV by RAJU</header>
 
     <div class="main-container">
         <div class="playlist-section">
             <div class="search-box-container">
                 <i class="fa-solid fa-magnifying-glass search-icon"></i>
                 <input type="text" id="search-input" class="search-input" placeholder="Search channels..." />
+                <a href="https://t.me/freeiptvbyraju" target="_blank" class="telegram-link" title="Join Telegram for all Updates & feedback">
+                    <i class="fa-brands fa-telegram"></i>
+                    <span>Join Us</span>
+                </a>
             </div>
-			<a href="https://t.me/freeiptvbyraju" target="_blank" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #0088cc; font-size: 20px;">
-    <i class="fa-brands fa-telegram"></i>
-</a>
             
             <div class="zoom-sidebar" id="zoom-sidebar-container">
                 <div style="padding: 20px; color: #8899a6; text-align: center;" id="loading-text">Loading channels...</div>
