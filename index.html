@@ -377,7 +377,27 @@ function tryPlayHls(url, nativeFallbackUrl) {
           }
         });
       }).catch(function() {
-        if (player.canPlayType('application/vnd.apple.mpegurl')) { player.src = url; player.play().catch(function() {}); }
+        hlsInstance = new Hls();
+        hlsInstance.loadSource(url);
+        hlsInstance.attachMedia(player);
+        hlsInstance.on(Hls.Events.MANIFEST_PARSED, function() {
+          qLevels = hlsInstance.levels || [];
+          buildQMenu();
+          player.play().catch(function() {});
+        });
+        hlsInstance.on(Hls.Events.LEVEL_SWITCHED, function(e, data) {
+          if (data.level >= 0 && qLevels[data.level]) {
+            qLabel.textContent = qLevels[data.level].height ? qLevels[data.level].height + 'p' : 'Level ' + (data.level + 1);
+          }
+        });
+        hlsInstance.on(Hls.Events.ERROR, function(e, data) {
+          if (data.fatal) {
+            hlsInstance.destroy();
+            hlsInstance = null;
+            if (nativeFallbackUrl) { tryNativePlayback(nativeFallbackUrl); }
+            else if (player.canPlayType('application/vnd.apple.mpegurl')) { player.src = url; player.play().catch(function() {}); }
+          }
+        });
       });
       return;
     }
