@@ -4,37 +4,11 @@ Facebook- https://www.facebook.com/profile.php?id=100004777816562
 Telegram  - https://t.me/Rajufreedom71
 
 
-
-
-#EXTM3U
-#EXTM3U#EXTM3U
-Ali Reza Raju (রাজু) 
-Facebook- https://www.facebook.com/profile.php?id=100004777816562
-Telegram  - https://t.me/Rajufreedom71
-
-
-
-#EXTM3U
-#EXTINF:-1 group-title="FIFA World Cup & Live Sports",T Sports HD
-http://rgkkw.live/live/1Aoen7elp5/IgMJ60tmAa/130714.ts
-#EXTINF:-1 group-title="FIFA World Cup & Live Sports",Матч ТВ
-https://bl.video.matchtv.ru/media/playlist/free_d46d0cf1712c0542ec7fd4f0808f600a_hd/17_89756005/1080/e6bef86de8a133cd7b27deb040758a00/4796141934.m3u8
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/subirkumarpaul/Logo/main/Bein%20Sports%201.jpeg" group-title="FIFA World Cup & Live Sports",Bein Sports MAX 1
-https://stream.kurdtv.live/bein-max/index.m3u8
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/subirkumarpaul/Logo/main/Bein%20Sports%202.jpeg" group-title="FIFA World Cup & Live Sports",Bein Sports MAX 2
-https://stream.kurdtv.live/bein-max-2/index.m3u8
-#EXTINF:-1 group-title="FIFA World Cup & Live Sports",Win Sports
-https://1nyaler.streamhostingcdn.top/stream/32/index.m3u8
-#EXTINF:-1 group-title="FIFA World Cup & Live Sports",azteca tv
-https://1nyaler.streamhostingcdn.top/stream/117/index.m3u8
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/Dazn.png" group-title="FIFA World Cup & Live Sports",DAZN
-https://1nyaler.streamhostingcdn.top/stream/94/index.m3u8
-#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/subirkumarpaul/Logo/main/Bein%20Sports%203.jpeg" group-title="FIFA World Cup & Live Sports",BEIN SPORTS Direct
-https://1nyaler.streamhostingcdn.top/stream/23/index.m3u8
-#EXTINF:-1 group-title="FIFA World Cup & Live Sports",Bein Sports 1 Max Arabic
-http://starhub.pro/live/farhat-3379/67897-913379/744517.ts
-#EXTINF:-1 group-title="FIFA World Cup & Live Sports",Z BanglaSonar
-
-#EXTINF:-1 group-title="FIFA World Cup & Live Sports",Unite8 Sports 2
-
-
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/subirkumarpaul/Logo/main/Star%20Sports%201%20Hindi.png" group-title="Sports",Star Sports 1 Hindi
+/proxy?url=http%3A%2F%2F103.157.248.140%3A8000%2Fplay%2Fa00g%2Findex.m3u8
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/subirkumarpaul/Logo/main/Star%20Sports%20Khel.png" group-title="Sports",STAR SPORTS KHEL
+/proxy?url=http%3A%2F%2F103.175.73.12%3A8080%2Flive%2F151%2F151_0.m3u8
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/subirkumarpaul/Logo/main/Sky%20Sports%20Action.png" group-title="Sports",SKY SPORTS ACTION
+/proxy?url=http%3A%2F%2F6zirt9yx.otttv.pw%2Fiptv%2FHEGN4VXXQQSYCA%2F9155%2Findex.m3u
+#EXTINF:-1 tvg-logo="https://raw.githubusercontent.com/subirkumarpaul/Logo/main/Willow%20Cricket.png" group-title="Sports",Willow Cricket
+/proxy?url=http%3A%2F%2F4kgood.org%2Flive%2F4o48up5evz%2Fr4fiast66u%2F13141.ts
